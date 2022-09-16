@@ -19,7 +19,6 @@ class InputPhoneViewController: UIViewController {
     }
     
     @IBAction func nextButtonPressed(_ sender: Any) {
-//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ValidatePhoneViewController") as! ValidatePhoneViewController
         let vc = ValidatePhoneViewController.instantiate()
         vc.phoneNumber = phoneNumberTextField.text
         self.present(vc, animated: true)

@@ -20,7 +20,6 @@ class ValidatePhoneViewController: UIViewController {
     @IBOutlet weak var sendAgainButton: UIButton!
     
     var phoneNumber: String?
-    //var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +51,6 @@ class ValidatePhoneViewController: UIViewController {
             case .success(let passwordRequest):
                 if passwordRequest.successful == true {
                     let searchVC = SearchViewController.instantiate()
-                    searchVC.password = self?.currentPhoneTextField.text
                     UserDefaults.standard.isEnter = true
                     let navigationController = UINavigationController(rootViewController: searchVC)
                     navigationController.modalPresentationStyle = .fullScreen

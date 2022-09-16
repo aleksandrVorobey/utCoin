@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -175,13 +175,58 @@
                     <view key="view" contentMode="scaleToFill" id="Kpt-c8-Ytw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="g7Y-uh-p90">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="TTk-vH-2KT"/>
-                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="g7Y-uh-p90" firstAttribute="leading" secondItem="TTk-vH-2KT" secondAttribute="leading" id="D2g-tf-g6a"/>
+                            <constraint firstItem="g7Y-uh-p90" firstAttribute="top" secondItem="TTk-vH-2KT" secondAttribute="top" id="VDP-3U-861"/>
+                            <constraint firstItem="g7Y-uh-p90" firstAttribute="bottom" secondItem="TTk-vH-2KT" secondAttribute="bottom" id="bMO-kM-UxO"/>
+                            <constraint firstItem="g7Y-uh-p90" firstAttribute="trailing" secondItem="TTk-vH-2KT" secondAttribute="trailing" id="spZ-t1-kcW"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="g7Y-uh-p90" id="IlS-X5-CDc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tBR-cf-WGl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1340" y="98"/>
+            <point key="canvasLocation" x="1340" y="97.601199400299862"/>
+        </scene>
+        <!--Campaign View Controller-->
+        <scene sceneID="HZk-6N-aha">
+            <objects>
+                <viewController storyboardIdentifier="CampaignViewController" id="z2z-Dp-tfc" customClass="CampaignViewController" customModule="utCoin" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DC4-AN-EQV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="SPh-YA-zul">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="fYY-YQ-7TZ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="SPh-YA-zul" firstAttribute="leading" secondItem="fYY-YQ-7TZ" secondAttribute="leading" id="07Z-Nz-iQg"/>
+                            <constraint firstItem="fYY-YQ-7TZ" firstAttribute="bottom" secondItem="SPh-YA-zul" secondAttribute="bottom" id="KLV-Bb-czy"/>
+                            <constraint firstItem="fYY-YQ-7TZ" firstAttribute="trailing" secondItem="SPh-YA-zul" secondAttribute="trailing" id="Y6L-ae-vIq"/>
+                            <constraint firstItem="SPh-YA-zul" firstAttribute="top" secondItem="fYY-YQ-7TZ" secondAttribute="top" id="pde-0u-MjH"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="SPh-YA-zul" id="wO6-BF-dL7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1iF-Du-yCT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2006" y="98"/>
         </scene>
     </scenes>
     <resources>
@@ -190,9 +235,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
