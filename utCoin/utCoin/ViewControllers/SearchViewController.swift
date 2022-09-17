@@ -11,8 +11,18 @@ class SearchViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    private var dowloadButton: UIButton! = {
+        var button = UIButton(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 45))
+        button.setTitleColor(.blue, for: .normal)
+        button.setTitle("Загрузить еще данные", for: .normal)
+        return button
+    }()
+    
+    var search: Search?
     var campaigns: [Campaign] = []
     var products: [Product] = []
+    var searchText: String?
+    var page = 0
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -36,19 +46,6 @@ class SearchViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(ProductTableViewCell.nib(), forCellReuseIdentifier: ProductTableViewCell.identifier)
         tableView.register(CampaignTableViewCell.nib(), forCellReuseIdentifier: CampaignTableViewCell.identifier)
-    }
-    
-    private func searchTextRequest(searchText: String) {
-        NetworkManager.shared.fetchSearchRequest(searchText: searchText) { result in
-            switch result {
-            case .success(let search):
-                self.campaigns = search.campaigns
-                self.products = search.products
-                self.tableView.reloadData()
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
     }
 }
 
@@ -92,14 +89,53 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 160
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastSectionIndex = tableView.numberOfSections - 1
+        let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
+        
+        if indexPath.section == lastSectionIndex && indexPath.row == lastRowIndex {
+            tableView.tableFooterView = dowloadButton
+            tableView.tableFooterView?.isHidden = false
+            
+            dowloadButton.addTarget(self, action: #selector(downloadNextPage), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func downloadNextPage() {
+        if search?.more == true && searchText != nil {
+            page += 1
+            NetworkManager.shared.fetchSearchRequest(page: page, searchText: searchText!) { result in
+                switch result {
+                case .success(let search):
+                    self.search = search
+                    self.campaigns += search.campaigns
+                    self.products += search.products
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
 }
 
 //MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
-        let textForUrl = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        searchTextRequest(searchText: textForUrl)
+        searchText = text
+        NetworkManager.shared.fetchSearchRequest(searchText: text) { result in
+            switch result {
+            case .success(let search):
+                self.search = search
+                self.campaigns = search.campaigns
+                self.products = search.products
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -111,3 +147,4 @@ extension SearchViewController: PushViewControllerProtocol {
         navigationController?.pushViewController(campaignVC, animated: true)
     }
 }
+
