@@ -19,10 +19,10 @@ class CampaignTableViewCell: UITableViewCell {
     static func nib() -> UINib {
         return UINib(nibName: "CampaignTableViewCell", bundle: nil)
     }
-
+    
     var models: [Campaign] = []
     var delegate: PushViewControllerProtocol?
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -33,11 +33,6 @@ class CampaignTableViewCell: UITableViewCell {
         collectionView.register(CampaignCollectionViewCell.nib(), forCellWithReuseIdentifier: CampaignCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
     }
     
 }

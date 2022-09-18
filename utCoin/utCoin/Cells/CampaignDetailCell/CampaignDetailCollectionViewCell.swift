@@ -8,12 +8,17 @@
 import UIKit
 
 class CampaignDetailCollectionViewCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var imageURL: UIImageView!
     
     static let identifier = "CampaignDetailCollectionViewCell"
     static func nib() -> UINib {
         return UINib(nibName: "CampaignDetailCollectionViewCell", bundle: nil)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageURL.image = nil
     }
     
     func setupCell(for modelProduct: Product, indexPath: IndexPath) {
@@ -27,5 +32,5 @@ class CampaignDetailCollectionViewCell: UICollectionViewCell {
             self?.imageURL.image = UIImage(data: data)
         }
     }
-
+    
 }

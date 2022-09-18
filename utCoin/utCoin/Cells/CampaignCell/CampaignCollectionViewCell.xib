@@ -24,11 +24,12 @@
                             <constraint firstAttribute="width" secondItem="MWW-qM-tJH" secondAttribute="height" multiplier="1:1" id="lrh-4g-9ii"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Oz-rF-1HW">
-                        <rect key="frame" x="21" y="210" width="41.5" height="25"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Oz-rF-1HW">
+                        <rect key="frame" x="21" y="210" width="100" height="25"/>
                         <color key="backgroundColor" systemColor="systemPurpleColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="VBk-8C-VXo"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="ojz-Lf-aD7"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>

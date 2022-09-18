@@ -29,6 +29,8 @@ class ValidatePhoneViewController: UIViewController {
     }
     
     private func fetchNumberCode() {
+        sendAgainButton.isEnabled = false
+        enabledButton()
         guard let phoneNumber = phoneNumber else { return }
         NetworkManager.shared.requestCodePhone(phoneNumber: phoneNumber) { [weak self] result in
             switch result {
@@ -41,6 +43,12 @@ class ValidatePhoneViewController: UIViewController {
             case .failure(let error):
                 self?.showAlert(title: "Ошибка запроса", message: error.localizedDescription)
             }
+        }
+    }
+    
+    private func enabledButton() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 59.0) {
+            self.sendAgainButton.isEnabled = true
         }
     }
     

@@ -25,11 +25,11 @@ class CampaignDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var nameCampaignLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var paymentTimeLabel: UILabel!
+    @IBOutlet weak var expandButton: UIButton!
     
     var modelProduct: Product?
     var modelCampaign: Campaign?
     
-    var heightAnchorView: NSLayoutConstraint!
     var openClose: Bool = false
     
     var delegate: TableCellUpdateProtocol?
@@ -42,8 +42,14 @@ class CampaignDetailTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
         setupCollectionView()
+        setupButton()
+    }
+    
+    private func setupButton() {
+        expandButton.setTitle("Развернуть", for: .normal)
+        expandButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
     }
     
     private func setupCollectionView() {
@@ -53,16 +59,20 @@ class CampaignDetailTableViewCell: UITableViewCell {
     }
     
     @IBAction func expandTapped(_ sender: Any) {
-        print(#function)
         if openClose {
+            expandButton.setTitle("Развернуть", for: .normal)
+            expandButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             openClose.toggle()
             delegate?.reloadCell()
         } else {
+            expandButton.setTitle("Свернуть", for: .normal)
+            expandButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
             openClose.toggle()
             delegate?.reloadCell()
         }
     }
     
+    //MARK: - setup cell Product
     func setupCell(for model: Product) {
         nameLabel.text = model.name
         nameCampaignLabel.text = model.campaignName
@@ -72,22 +82,29 @@ class CampaignDetailTableViewCell: UITableViewCell {
         let action = model.actions.first
         
         var fullActionsText = ""
+        var rangeIndexArray: [NSRange] = []
+        var startIndexRange = 0
         
         if model.actions.count > 1 {
             model.actions.forEach { action in
                 fullActionsText += action.value + " " + action.text + "\n"
+                let range = NSMakeRange(startIndexRange, (action.value.count))
+                rangeIndexArray.append(range)
+                startIndexRange = fullActionsText.count
             }
         }
         
         if openClose {
-            actionsLabel.text = fullActionsText
+            actionsLabel.attributedText = attributedString(for: fullActionsText, range: rangeIndexArray)
         } else {
             let text = (action?.value ?? "") + " " +  (action?.text ?? "")
-            actionsLabel.text = text
+            let range = NSMakeRange(0, action?.value.count ?? 0)
+            actionsLabel.attributedText = attributedString(for: text, range: [range])
         }
         
     }
     
+    //MARK: - setup cell Campaign
     func setupCell(for model: Campaign) {
         let height = namePriceView.heightAnchor.constraint(equalToConstant: 0)
         height.isActive = true
@@ -98,26 +115,39 @@ class CampaignDetailTableViewCell: UITableViewCell {
         let action = model.actions.first
         
         var fullActionsText = ""
+        var rangeIndexArray: [NSRange] = []
+        var startIndexRange = 0
         
         if model.actions.count > 1 {
             model.actions.forEach { action in
                 fullActionsText += action.value + " " + action.text + "\n"
+                let range = NSMakeRange(startIndexRange, (action.value.count))
+                rangeIndexArray.append(range)
+                startIndexRange = fullActionsText.count
             }
         }
         
         if openClose {
-            actionsLabel.text = fullActionsText
+            actionsLabel.attributedText = attributedString(for: fullActionsText, range: rangeIndexArray)
         } else {
             let text = (action?.value ?? "") + " " +  (action?.text ?? "")
-            actionsLabel.text = text
+            let range = NSMakeRange(0, action?.value.count ?? 0)
+            actionsLabel.attributedText = attributedString(for: text, range: [range])
         }
         
+    }
+    
+    private func attributedString(for text: String, range: [NSRange]) -> NSAttributedString {
+        let textAttribute = [NSAttributedString.Key.foregroundColor: UIColor.purple]
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        range.forEach({attributedString.setAttributes(textAttribute, range: $0)})
+        return attributedString
     }
 }
 
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension CampaignDetailTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if modelProduct != nil {
             return modelProduct?.imageUrls.count ?? 0

@@ -19,21 +19,10 @@ class ProductTableViewCell: UITableViewCell {
     static func nib() -> UINib {
         return UINib(nibName: "ProductTableViewCell", bundle: nil)
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         self.imageProduct.image = nil
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func setupCell(product: Product) {
@@ -44,7 +33,6 @@ class ProductTableViewCell: UITableViewCell {
         NetworkManager.shared.getImageFrom(url: product.imageUrls[0]) { [weak self] data in
             self?.imageProduct.image = UIImage(data: data)
         }
-        
     }
     
 }

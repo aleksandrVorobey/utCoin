@@ -28,7 +28,6 @@ struct Search: Codable {
 }
 
 struct Campaign: Codable {
-    let id: Int
     let name: String
     let cashback: String
     let actions: [Action]
@@ -37,7 +36,6 @@ struct Campaign: Codable {
 }
 
 struct Product: Codable {
-    let id: Int
     let name: String
     let cashback: String
     let actions: [Action]

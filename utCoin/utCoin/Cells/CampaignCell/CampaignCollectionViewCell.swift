@@ -18,12 +18,6 @@ class CampaignCollectionViewCell: UICollectionViewCell {
         return UINib(nibName: "CampaignCollectionViewCell", bundle: nil)
     }
     
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.campaignImageView.image = nil

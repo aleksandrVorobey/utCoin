@@ -22,8 +22,7 @@ struct URLFactory {
         components.queryItems = [URLQueryItem(name: "search_string", value: paramSearch),
                                  URLQueryItem(name: "page", value: "\(paramPage)"),
                                  URLQueryItem(name: "phone", value: phone),
-                                 URLQueryItem(name: "password", value: password)
-        ]
+                                 URLQueryItem(name: "password", value: password)]
         return components.url!
     }
 }
