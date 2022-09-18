@@ -105,18 +105,25 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     @objc private func downloadNextPage() {
         if search?.more == true && searchText != nil {
             page += 1
+            let oldCount = products.count
             NetworkManager.shared.fetchSearchRequest(page: page, searchText: searchText!) { result in
                 switch result {
                 case .success(let search):
                     self.search = search
-                    self.campaigns += search.campaigns
                     self.products += search.products
-                    self.tableView.reloadData()
+                    self.reloadRows(newIndex: self.products.count, oldIndex: oldCount)
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
         }
+    }
+    
+    private func reloadRows(newIndex: Int, oldIndex: Int) {
+        let section = campaigns.isEmpty ? 0 : 1
+        let indexPath = (oldIndex..<newIndex).map({IndexPath(row: $0, section: section)})
+        tableView.insertRows(at: indexPath, with: .fade)
+        tableView.reloadRows(at: indexPath, with: .fade)
     }
 }
 
